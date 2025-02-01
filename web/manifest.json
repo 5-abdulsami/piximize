@@ -1,11 +1,11 @@
 {
     "name": "picpress",
-    "short_name": "picpress",
+    "short_name": "piximize",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Size Down, Quality Intact",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

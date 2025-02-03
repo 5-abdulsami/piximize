@@ -22,8 +22,8 @@ AppBar customAppBar(BuildContext context) {
         SizedBox(width: size.width * 0.01),
         Image.asset(
           "assets/images/piximize_logo.png",
-          width: size.width * 0.03,
-          height: size.width * 0.03,
+          width: size.width * 0.0315,
+          height: size.width * 0.0315,
         ),
         SizedBox(width: size.width * 0.006),
         Text(

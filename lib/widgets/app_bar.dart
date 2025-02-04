@@ -16,7 +16,7 @@ AppBar customAppBar(BuildContext context) {
       ),
     ),
     toolbarHeight: size.height * 0.1,
-    backgroundColor: whiteColor,
+    backgroundColor: const Color.fromARGB(255, 56, 55, 68),
     title: Row(
       children: [
         SizedBox(width: size.width * 0.01),
@@ -29,7 +29,7 @@ AppBar customAppBar(BuildContext context) {
         Text(
           'Piximize',
           style: GoogleFonts.pacifico(
-              color: primaryColor, fontSize: size.width * 0.018),
+              color: whiteColor, fontSize: size.width * 0.018),
         ),
       ],
     ),

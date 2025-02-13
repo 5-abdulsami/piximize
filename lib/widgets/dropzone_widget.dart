@@ -1,14 +1,16 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:piximize/model/dropped_file.dart';
 import 'package:piximize/utils/colors.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 
 class DropzoneWidget extends StatefulWidget {
   final ValueChanged<DroppedFile> onDroppedFile;
+
   const DropzoneWidget({super.key, required this.onDroppedFile});
 
   @override
@@ -17,59 +19,73 @@ class DropzoneWidget extends StatefulWidget {
 
 class _DropzoneWidgetState extends State<DropzoneWidget> {
   late DropzoneViewController controller;
+  bool isHighlighted = false;
   Uint8List? imageBytes;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      decoration: BoxDecoration(color: Colors.green),
-      child: Stack(
-        children: [
-          DropzoneView(
-            onCreated: (controller) => this.controller = controller,
-            onDropFile: acceptFile,
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.upload_file,
-                  color: whiteColor,
-                  size: 80,
-                ),
-                Text(
-                  "Drop Files here",
-                  style: TextStyle(color: whiteColor),
-                ),
-                ElevatedButton.icon(
-                  onHover: (value) => setState(() {}),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(size.width * 0.15, size.height * 0.1),
-                    backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () async {
-                    final events = await controller.pickFiles();
-                    if (events.isEmpty) return;
-
-                    acceptFile(events.first);
-                  },
-                  icon: Icon(
-                    Icons.image,
-                    color: whiteColor,
-                    size: 30,
-                  ),
-                  label: Text("Select Image",
-                      style: GoogleFonts.poppins(
-                          color: whiteColor, fontSize: size.width * 0.015)),
-                ),
-              ],
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color:
+              isHighlighted ? greenColor : primaryColor.withValues(alpha: 0.5),
+          borderRadius: BorderRadius.circular(size.width * 0.02)),
+      child: DottedBorder(
+        strokeCap: StrokeCap.round,
+        strokeWidth: 2,
+        color: whiteColor,
+        dashPattern: [7, 7],
+        child: Stack(
+          children: [
+            DropzoneView(
+              onCreated: (controller) => this.controller = controller,
+              onHover: () => setState(() => isHighlighted = true),
+              onLeave: () => setState(() => isHighlighted = false),
+              onDropFile: acceptFile,
             ),
-          ),
-        ],
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.upload_file,
+                    color: whiteColor,
+                    size: 80,
+                  ),
+                  Text(
+                    "Drop Files here",
+                    style: TextStyle(color: whiteColor),
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  ElevatedButton.icon(
+                    onHover: (value) => setState(() {}),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(size.width * 0.15, size.height * 0.1),
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    onPressed: () async {
+                      final events = await controller.pickFiles();
+                      if (events.isEmpty) return;
+
+                      acceptFile(events.first);
+                    },
+                    icon: Icon(
+                      Icons.image,
+                      color: whiteColor,
+                      size: 30,
+                    ),
+                    label: Text("Select Image",
+                        style: GoogleFonts.poppins(
+                            color: whiteColor, fontSize: size.width * 0.015)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -81,10 +97,10 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
     final bytes = await controller.getFileSize(event);
     final url = await controller.createFileUrl(event);
 
-    print("File Name: $name");
-    print("File Mime: $mime");
-    print("File Bytes: $bytes");
-    print("File url: $url");
+    log("File Name: $name");
+    log("File Mime: $mime");
+    log("File Bytes: $bytes");
+    log("File url: $url");
 
     final droppedFile = DroppedFile(
       name: name,
@@ -94,5 +110,6 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
     );
 
     widget.onDroppedFile(droppedFile);
+    setState(() => isHighlighted = false);
   }
 }

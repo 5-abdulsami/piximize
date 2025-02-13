@@ -32,13 +32,20 @@ class _MainScreenState extends State<MainScreen> {
               style: GoogleFonts.poppins(fontSize: size.width * 0.013),
             ),
             SizedBox(
-              height: size.height * 0.14,
+              height: size.height * 0.1,
             ),
-            DroppedFileWidget(file: file!),
+            DroppedFileWidget(file: file),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
             Container(
-              height: 300,
+              height: size.height * 0.5,
+              width: size.width * 0.5,
               child: DropzoneWidget(
                   onDroppedFile: (file) => setState(() => this.file = file)),
+            ),
+            SizedBox(
+              height: size.height * 0.14,
             ),
           ]),
         ),

@@ -5,3 +5,4 @@ final Color whiteColor = Colors.white;
 final Color blackColor = Colors.black;
 final Color greyColor = Colors.grey;
 final Color darkThemeColor = Color.fromARGB(255, 56, 55, 68);
+final Color greenColor = Colors.green;

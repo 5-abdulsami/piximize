@@ -27,65 +27,61 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
+          border:
+              Border.all(color: primaryColor.withValues(alpha: 0.4), width: 4),
           color:
               isHighlighted ? greenColor : primaryColor.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(size.width * 0.02)),
-      child: DottedBorder(
-        strokeCap: StrokeCap.round,
-        strokeWidth: 2,
-        color: whiteColor,
-        dashPattern: [7, 7],
-        child: Stack(
-          children: [
-            DropzoneView(
-              onCreated: (controller) => this.controller = controller,
-              onHover: () => setState(() => isHighlighted = true),
-              onLeave: () => setState(() => isHighlighted = false),
-              onDropFile: acceptFile,
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.upload_file,
-                    color: whiteColor,
-                    size: 80,
-                  ),
-                  Text(
-                    "Drop Files here",
-                    style: TextStyle(color: whiteColor),
-                  ),
-                  SizedBox(height: size.height * 0.01),
-                  ElevatedButton.icon(
-                    onHover: (value) => setState(() {}),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(size.width * 0.15, size.height * 0.1),
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+      child: Stack(
+        children: [
+          DropzoneView(
+            onCreated: (controller) => this.controller = controller,
+            onHover: () => setState(() => isHighlighted = true),
+            onLeave: () => setState(() => isHighlighted = false),
+            onDropFile: acceptFile,
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.image_outlined,
+                  color: whiteColor,
+                  size: 80,
+                ),
+                Text(
+                  "Drop Files here",
+                  style: TextStyle(color: whiteColor),
+                ),
+                SizedBox(height: size.height * 0.01),
+                ElevatedButton.icon(
+                  onHover: (value) => setState(() {}),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(size.width * 0.15, size.height * 0.1),
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    onPressed: () async {
-                      final events = await controller.pickFiles();
-                      if (events.isEmpty) return;
+                  ),
+                  onPressed: () async {
+                    final events = await controller.pickFiles();
+                    if (events.isEmpty) return;
 
-                      acceptFile(events.first);
-                    },
-                    icon: Icon(
-                      Icons.image,
-                      color: whiteColor,
-                      size: 30,
-                    ),
-                    label: Text("Select Image",
-                        style: GoogleFonts.poppins(
-                            color: whiteColor, fontSize: size.width * 0.015)),
+                    acceptFile(events.first);
+                  },
+                  icon: Icon(
+                    Icons.image,
+                    color: whiteColor,
+                    size: 28,
                   ),
-                ],
-              ),
+                  label: Text("Select Image",
+                      style: GoogleFonts.poppins(
+                          color: whiteColor, fontSize: size.width * 0.013)),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -16,7 +16,7 @@ AppBar customAppBar(BuildContext context) {
       ),
     ),
     toolbarHeight: size.height * 0.1,
-    backgroundColor: darkThemeColor,
+    backgroundColor: whiteColor,
     title: Row(
       children: [
         SizedBox(width: size.width * 0.01),

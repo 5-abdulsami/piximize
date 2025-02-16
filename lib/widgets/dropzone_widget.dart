@@ -25,6 +25,8 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
+      width: size.width * 0.6,
+      height: size.height * 0.4,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           border:
@@ -50,15 +52,6 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.image_outlined,
-                    color: whiteColor,
-                    size: 80,
-                  ),
-                  Text(
-                    "Drop Files here",
-                    style: TextStyle(color: whiteColor),
-                  ),
                   SizedBox(height: size.height * 0.01),
                   ElevatedButton.icon(
                     onHover: (value) => setState(() {}),
@@ -76,7 +69,7 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
                       acceptFile(events.first);
                     },
                     icon: Icon(
-                      Icons.image,
+                      Icons.image_outlined,
                       color: whiteColor,
                       size: 28,
                     ),

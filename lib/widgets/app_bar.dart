@@ -28,7 +28,7 @@ AppBar customAppBar(BuildContext context) {
         SizedBox(width: size.width * 0.006),
         Text(
           'Piximize',
-          style: GoogleFonts.pacifico(
+          style: GoogleFonts.poppins(
               color: primaryColor, fontSize: size.width * 0.018),
         ),
       ],

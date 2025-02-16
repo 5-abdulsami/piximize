@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,39 +28,69 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: greenColor,
+      backgroundColor: Colors.white,
       appBar: customAppBar(context),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: size.height * 0.08),
-              piximize(fontSize: size.width * 0.04),
+              SizedBox(height: size.height * 0.05),
+              // App Title and Tagline
+              piximize(fontSize: size.width * 0.05),
+              SizedBox(height: size.height * 0.007),
               Text(
                 "Compress your images without losing quality",
-                style: GoogleFonts.poppins(fontSize: size.width * 0.013),
-              ),
-              SizedBox(height: size.height * 0.1),
-              DroppedFileWidget(file: file),
-              SizedBox(height: size.height * 0.02),
-              SizedBox(
-                height: size.height * 0.5,
-                width: size.width * 0.5,
-                child: DropzoneWidget(
-                  onDroppedFile: (file) async {
-                    setState(() {
-                      this.file = file;
-                    });
-                    if (file.fileBytes != null) {
-                      compressedImageBytes =
-                          await _compressImage(file.fileBytes!);
-                      setState(() {});
-                    }
-                  },
+                style: GoogleFonts.poppins(
+                  fontSize: size.width * 0.015,
+                  color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: size.height * 0.02),
-              if (file != null)
+              SizedBox(height: size.height * 0.05),
+
+              // Dropzone Section
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.grey[50],
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(
+                    color: Colors.grey[300]!,
+                    width: 2,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Drag & Drop or Select an Image",
+                      style: GoogleFonts.poppins(
+                        fontSize: size.width * 0.02,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    DropzoneWidget(
+                      onDroppedFile: (file) async {
+                        setState(() {
+                          this.file = file;
+                        });
+                        if (file.fileBytes != null) {
+                          compressedImageBytes =
+                              await _compressImage(file.fileBytes!);
+                          setState(() {});
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: size.height * 0.05),
+
+              // File Details and Compression Controls
+              if (file != null) ...[
+                DroppedFileWidget(file: file),
+                SizedBox(height: size.height * 0.03),
                 QualitySlider(
                   value: quality,
                   onChanged: (value) async {
@@ -73,19 +102,26 @@ class _MainScreenState extends State<MainScreen> {
                     }
                   },
                 ),
-              SizedBox(height: size.height * 0.02),
-              if (file != null && compressedImageBytes != null)
+                SizedBox(height: size.height * 0.03),
+              ],
+
+              // Image Preview Section
+              if (file != null && compressedImageBytes != null) ...[
                 ImagePreview(
                   originalImage: file!.fileBytes!,
                   compressedImage: compressedImageBytes!,
                 ),
-              SizedBox(height: size.height * 0.02),
-              if (compressedImageBytes != null)
+                SizedBox(height: size.height * 0.03),
+              ],
+
+              // Download Button
+              if (compressedImageBytes != null) ...[
                 DownloadButton(
                   compressedImage: compressedImageBytes!,
-                  fileName: file?.name ?? 'compressed_image.jpg',
+                  file: file,
                 ),
-              SizedBox(height: size.height * 0.14),
+                SizedBox(height: size.height * 0.05),
+              ],
             ],
           ),
         ),

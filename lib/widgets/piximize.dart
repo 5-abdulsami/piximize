@@ -5,6 +5,6 @@ import 'package:piximize/utils/colors.dart';
 Widget piximize({required double fontSize}) {
   return Text(
     "Piximize",
-    style: GoogleFonts.pacifico(color: primaryColor, fontSize: fontSize),
+    style: GoogleFonts.poppins(color: primaryColor, fontSize: fontSize),
   );
 }

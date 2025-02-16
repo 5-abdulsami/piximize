@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: whiteColor,
+      backgroundColor: greenColor,
       appBar: customAppBar(context),
       body: SingleChildScrollView(
         child: Center(

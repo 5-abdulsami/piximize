@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:file_saver/file_saver.dart';
+import 'package:piximize/utils/utils.dart';
 
 class DownloadButton extends StatelessWidget {
   final Uint8List? compressedImage;
@@ -25,9 +26,7 @@ class DownloadButton extends StatelessWidget {
                 ext: 'jpg', // Change extension based on the image format
               )
                   .then((_) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('File saved successfully!')),
-                );
+                Utils.toastMessage("Image Downloaded Successfully");
               });
             }
           : null,

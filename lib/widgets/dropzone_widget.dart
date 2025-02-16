@@ -28,15 +28,15 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           border:
-              Border.all(color: primaryColor.withValues(alpha: 0.4), width: 4),
+              Border.all(color: primaryColor.withValues(alpha: 0.4), width: 2),
           color:
               isHighlighted ? greenColor : primaryColor.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(size.width * 0.026)),
       child: DottedBorder(
         borderType: BorderType.RRect,
         radius: Radius.circular(size.width * 0.02),
-        color: primaryColor.withValues(alpha: 0.4),
-        strokeWidth: 3.5,
+        color: whiteColor,
+        strokeWidth: 2,
         dashPattern: [7, 7],
         child: Stack(
           children: [

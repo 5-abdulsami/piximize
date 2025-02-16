@@ -1,8 +1,7 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 
-class ImagePreview extends StatelessWidget {
+class ImagePreview extends StatefulWidget {
   final Uint8List? originalImage;
   final Uint8List? compressedImage;
 
@@ -13,25 +12,97 @@ class ImagePreview extends StatelessWidget {
   });
 
   @override
+  _ImagePreviewState createState() => _ImagePreviewState();
+}
+
+class _ImagePreviewState extends State<ImagePreview> {
+  double _sliderValue = 0.5;
+  final double imageWidth = 300; // Set a fixed image width
+
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        if (originalImage != null)
-          Column(
-            children: [
-              Text('Original Image', style: TextStyle(fontSize: 16)),
-              Image.memory(originalImage!, height: 200),
-            ],
+    if (widget.originalImage == null || widget.compressedImage == null) {
+      return Center(child: Text('No images available'));
+    }
+
+    return Center(
+      child: Stack(
+        children: [
+          SizedBox(
+            width: imageWidth,
+            child: Image.memory(widget.compressedImage!),
           ),
-        if (compressedImage != null)
-          Column(
-            children: [
-              Text('Compressed Image', style: TextStyle(fontSize: 16)),
-              Image.memory(compressedImage!, height: 200),
-            ],
+          ClipRect(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              widthFactor: _sliderValue,
+              child: SizedBox(
+                width: imageWidth,
+                child: Image.memory(widget.originalImage!),
+              ),
+            ),
           ),
-      ],
+          Positioned(
+            top: 10,
+            left: 10,
+            child: Text(
+              'Original Image',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                backgroundColor: Colors.black54,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 10,
+            right: 10,
+            child: Text(
+              'Compressed Image',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                backgroundColor: Colors.black54,
+              ),
+            ),
+          ),
+          Positioned(
+            left: imageWidth * _sliderValue - 12.5,
+            top: 0,
+            bottom: 0,
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                setState(() {
+                  _sliderValue += details.primaryDelta! / imageWidth;
+                  _sliderValue = _sliderValue.clamp(0.0, 1.0);
+                });
+              },
+              child: Container(
+                width: 25,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12.5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.drag_handle,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

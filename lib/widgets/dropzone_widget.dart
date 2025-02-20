@@ -26,7 +26,7 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.6,
-      height: size.height * 0.4,
+      height: size.height * 0.5,
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           border:

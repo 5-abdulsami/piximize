@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:piximize/model/dropped_file.dart';
-import 'package:piximize/utils/colors.dart';
 import 'package:piximize/widgets/app_bar.dart';
 import 'package:piximize/widgets/dropped_file_widget.dart';
 import 'package:piximize/widgets/dropzone_widget.dart';
@@ -99,7 +98,7 @@ class _MainScreenState extends State<MainScreen> {
                 if (file != null) ...[
                   DroppedFileWidget(file: file),
                   SizedBox(height: size.height * 0.03),
-                  Container(
+                  SizedBox(
                     width: size.width * 0.7,
                     child: QualitySlider(
                       value: quality,

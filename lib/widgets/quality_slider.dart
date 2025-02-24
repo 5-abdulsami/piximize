@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:piximize/utils/colors.dart';
 
 class QualitySlider extends StatelessWidget {
   final double value;
@@ -19,6 +20,9 @@ class QualitySlider extends StatelessWidget {
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         Slider(
+          thumbColor: primaryColor,
+          activeColor: primaryColor,
+          inactiveColor: primaryColor.withValues(alpha: 0.3),
           value: value,
           min: 0,
           max: 100,

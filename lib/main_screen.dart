@@ -51,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
                     color: Colors.grey[700],
                   ),
                 ),
-                SizedBox(height: size.height * 0.05),
+                SizedBox(height: size.height * 0.09),
 
                 // Dropzone Section
                 Container(
@@ -99,7 +99,7 @@ class _MainScreenState extends State<MainScreen> {
                   DroppedFileWidget(file: file),
                   SizedBox(height: size.height * 0.03),
                   SizedBox(
-                    width: size.width * 0.7,
+                    width: size.width * 0.66,
                     child: QualitySlider(
                       value: quality,
                       onChanged: (value) async {
@@ -114,24 +114,36 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   SizedBox(height: size.height * 0.03),
                 ],
-
-                // Image Preview Section
-                if (file != null && compressedImageBytes != null) ...[
-                  ImagePreview(
-                    originalImage: file!.fileBytes!,
-                    compressedImage: compressedImageBytes!,
-                  ),
-                  SizedBox(height: size.height * 0.03),
-                ],
-
-                // Download Button
-                if (compressedImageBytes != null) ...[
-                  DownloadButton(
-                    compressedImage: compressedImageBytes!,
-                    file: file,
-                  ),
-                  SizedBox(height: size.height * 0.05),
-                ],
+                SizedBox(
+                  width: size.width * 0.66,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Image Preview Section
+                        if (file != null && compressedImageBytes != null) ...[
+                          Expanded(
+                            flex: 1,
+                            child: Center(
+                              child: ImagePreview(
+                                originalImage: file!.fileBytes!,
+                                compressedImage: compressedImageBytes!,
+                              ),
+                            ),
+                          ),
+                        ],
+                        // Download Button
+                        if (compressedImageBytes != null) ...[
+                          Expanded(
+                            flex: 1,
+                            child: DownloadButton(
+                              compressedImage: compressedImageBytes!,
+                              file: file,
+                            ),
+                          ),
+                        ],
+                      ]),
+                ),
+                SizedBox(height: size.height * 0.1),
               ],
             ),
           ),

@@ -5,7 +5,7 @@ class DroppedFile {
   final String name;
   final String mime;
   final int bytes;
-  final Uint8List? fileBytes; // Add this field to store raw image data
+  final Uint8List? fileBytes;
 
   DroppedFile(
       {required this.url,

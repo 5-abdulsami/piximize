@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:file_saver/file_saver.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:piximize/model/dropped_file.dart';
+import 'package:piximize/utils/colors.dart';
 import 'package:piximize/utils/utils.dart';
 
 class DownloadButton extends StatelessWidget {
@@ -16,7 +18,15 @@ class DownloadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(size.width * 0.15, size.height * 0.1),
+        backgroundColor: primaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
       onPressed: compressedImage != null
           ? () async {
               // Remove the existing extension from the file name
@@ -36,8 +46,14 @@ class DownloadButton extends StatelessWidget {
               });
             }
           : null,
-      icon: Icon(Icons.download),
-      label: Text('Download Compressed Image'),
+      icon: Icon(
+        Icons.download,
+        color: whiteColor,
+        size: 28,
+      ),
+      label: Text("Download Compressed Image",
+          style: GoogleFonts.poppins(
+              color: whiteColor, fontSize: size.width * 0.013)),
     );
   }
 }

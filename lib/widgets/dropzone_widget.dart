@@ -94,7 +94,7 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
     final url = await controller.createFileUrl(event);
     final fileBytes = await controller.getFileData(event); // Get raw image data
 
-    log("File Name: $name");
+    log("-----File Name: $name");
     log("File Mime: $mime");
     log("File Bytes: $bytes");
     log("File url: $url");

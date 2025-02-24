@@ -12,10 +12,10 @@ class ImagePreview extends StatefulWidget {
   });
 
   @override
-  _ImagePreviewState createState() => _ImagePreviewState();
+  ImagePreviewState createState() => ImagePreviewState();
 }
 
-class _ImagePreviewState extends State<ImagePreview> {
+class ImagePreviewState extends State<ImagePreview> {
   double _sliderValue = 0.5;
   final double imageWidth = 400; // Set a fixed image width
 

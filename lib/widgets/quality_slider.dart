@@ -54,7 +54,7 @@ class QualitySlider extends StatelessWidget {
         SizedBox(height: 16),
 
         // Custom slider with markers
-        Stack(
+        Column(
           children: [
             // Quality level markers
             Positioned.fill(
@@ -110,7 +110,7 @@ class QualitySlider extends StatelessWidget {
               Text(
                 'Quality Level Guide',
                 style: GoogleFonts.poppins(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: Colors.grey[800],
                 ),
@@ -122,14 +122,14 @@ class QualitySlider extends StatelessWidget {
                 Icons.star,
                 Colors.amber,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 10),
               _buildQualityLevelInfo(
                 '40-79%',
                 'Good for web and social media',
                 Icons.thumb_up,
                 Colors.green,
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 10),
               _buildQualityLevelInfo(
                 '0-39%',
                 'Suitable for thumbnails and previews',
@@ -146,16 +146,10 @@ class QualitySlider extends StatelessWidget {
   Widget _buildQualityMarker(String label, double position) {
     final bool isActive = value >= position;
     return Container(
-      width: 2,
-      height: 40,
+      width: 60,
+      height: 60,
       child: Column(
         children: [
-          Container(
-            width: 2,
-            height: 12,
-            color: isActive ? _getSliderColor(value) : Colors.grey[300],
-          ),
-          SizedBox(height: 4),
           Text(
             label,
             style: GoogleFonts.poppins(
@@ -163,6 +157,12 @@ class QualitySlider extends StatelessWidget {
               color: isActive ? _getSliderColor(value) : Colors.grey[400],
               fontWeight: isActive ? FontWeight.w500 : FontWeight.normal,
             ),
+          ),
+          SizedBox(height: 4),
+          Container(
+            width: 2,
+            height: 12,
+            color: isActive ? _getSliderColor(value) : Colors.grey[300],
           ),
         ],
       ),
@@ -185,7 +185,7 @@ class QualitySlider extends StatelessWidget {
           ),
           child: Icon(
             icon,
-            size: 16,
+            size: 18,
             color: color,
           ),
         ),

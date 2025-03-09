@@ -7,9 +7,9 @@ class DroppedFileWidget extends StatelessWidget {
   final DroppedFile? file;
 
   const DroppedFileWidget({
-    Key? key,
+    super.key,
     required this.file,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -279,9 +279,7 @@ class DroppedFileWidget extends StatelessWidget {
 
   String _truncateFileName(String fileName) {
     if (fileName.length > 25) {
-      return fileName.substring(0, 20) +
-          '...' +
-          fileName.substring(fileName.lastIndexOf('.'));
+      return '${fileName.substring(0, 20)}...${fileName.substring(fileName.lastIndexOf('.'))}';
     }
     return fileName;
   }

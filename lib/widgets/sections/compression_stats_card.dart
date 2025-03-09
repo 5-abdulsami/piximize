@@ -7,10 +7,10 @@ class CompressionStatsCard extends StatelessWidget {
   final int compressedSize;
 
   const CompressionStatsCard({
-    Key? key,
+    super.key,
     required this.originalSize,
     required this.compressedSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class CompressionStatsCard extends StatelessWidget {
           Text(
             'Compression Results',
             style: GoogleFonts.poppins(
-              fontSize: 16,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
               color: Colors.grey[800],
             ),
@@ -47,40 +47,43 @@ class CompressionStatsCard extends StatelessWidget {
           // Compression ratio indicator
           Container(
             padding: EdgeInsets.all(16),
+            height: 120,
             decoration: BoxDecoration(
               color: primaryColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.auto_awesome,
-                  color: primaryColor,
-                  size: 24,
-                ),
-                SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${compressionRatio.toStringAsFixed(1)}%',
-                      style: GoogleFonts.poppins(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.auto_awesome,
+                    color: primaryColor,
+                    size: 40,
+                  ),
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${compressionRatio.toStringAsFixed(1)}%',
+                        style: GoogleFonts.poppins(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'Size Reduction',
-                      style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        color: Colors.grey[600],
+                      Text(
+                        'Size Reduction',
+                        style: GoogleFonts.poppins(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(height: 16),
@@ -106,7 +109,7 @@ class CompressionStatsCard extends StatelessWidget {
           ),
 
           // Progress bar
-          SizedBox(height: 16),
+          SizedBox(height: 25),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

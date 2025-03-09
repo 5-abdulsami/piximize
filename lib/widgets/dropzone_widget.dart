@@ -41,12 +41,6 @@ class _DropzoneWidgetState extends State<DropzoneWidget> {
                 ? primaryColor.withOpacity(0.05)
                 : Colors.grey[50],
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: isHighlighted
-                  ? primaryColor.withOpacity(0.5)
-                  : Colors.grey[300]!,
-              width: 2,
-            ),
           ),
           child: DottedBorder(
             borderType: BorderType.RRect,

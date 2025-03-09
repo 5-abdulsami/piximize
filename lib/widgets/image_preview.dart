@@ -51,67 +51,70 @@ class ImagePreviewState extends State<ImagePreview> {
     return Column(
       children: [
         // Image comparison container
-        Container(
-          key: _imageKey,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 10,
-                spreadRadius: 0,
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: Stack(
-              children: [
-                // Base image (compressed)
-                SizedBox(
-                  width: imageWidth,
-                  child: Image.memory(
-                    widget.compressedImage!,
-                    fit: BoxFit.contain,
-                  ),
+        Center(
+          child: Container(
+            height: 250,
+            key: _imageKey,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  spreadRadius: 0,
                 ),
-                // Overlay image (original)
-                ClipRect(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    widthFactor: _sliderValue,
-                    child: SizedBox(
-                      width: imageWidth,
-                      child: Image.memory(
-                        widget.originalImage!,
-                        fit: BoxFit.contain,
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Stack(
+                children: [
+                  // Base image (compressed)
+                  SizedBox(
+                    width: imageWidth,
+                    child: Image.memory(
+                      widget.compressedImage!,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  // Overlay image (original)
+                  ClipRect(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      widthFactor: _sliderValue,
+                      child: SizedBox(
+                        width: imageWidth,
+                        child: Image.memory(
+                          widget.originalImage!,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                // Labels
-                _buildImageLabels(),
-                // Slider handle
-                _buildSliderHandle(),
-                // Touch overlay for mobile
-                Positioned.fill(
-                  child: GestureDetector(
-                    onHorizontalDragStart: (_) =>
-                        setState(() => _isDragging = true),
-                    onHorizontalDragEnd: (_) =>
-                        setState(() => _isDragging = false),
-                    onHorizontalDragUpdate: (details) {
-                      if (_imageSize != null) {
-                        setState(() {
-                          _sliderValue +=
-                              details.primaryDelta! / _imageSize!.width;
-                          _sliderValue = _sliderValue.clamp(0.0, 1.0);
-                        });
-                      }
-                    },
+                  // Labels
+                  _buildImageLabels(),
+                  // Slider handle
+                  _buildSliderHandle(),
+                  // Touch overlay for mobile
+                  Positioned.fill(
+                    child: GestureDetector(
+                      onHorizontalDragStart: (_) =>
+                          setState(() => _isDragging = true),
+                      onHorizontalDragEnd: (_) =>
+                          setState(() => _isDragging = false),
+                      onHorizontalDragUpdate: (details) {
+                        if (_imageSize != null) {
+                          setState(() {
+                            _sliderValue +=
+                                details.primaryDelta! / _imageSize!.width;
+                            _sliderValue = _sliderValue.clamp(0.0, 1.0);
+                          });
+                        }
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -150,7 +153,7 @@ class ImagePreviewState extends State<ImagePreview> {
   Widget _buildPlaceholder() {
     return Container(
       width: imageWidth,
-      height: 300,
+      height: 150,
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),

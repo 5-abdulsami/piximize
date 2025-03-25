@@ -20,7 +20,6 @@ class ImagePreview extends StatefulWidget {
 class ImagePreviewState extends State<ImagePreview> {
   double _sliderValue = 0.5;
   bool _isDragging = false;
-  final double imageWidth = 400;
   final GlobalKey _imageKey = GlobalKey();
   Size? _imageSize;
 
@@ -45,25 +44,24 @@ class ImagePreviewState extends State<ImagePreview> {
   @override
   Widget build(BuildContext context) {
     if (widget.originalImage == null || widget.compressedImage == null) {
-      return _buildPlaceholder();
+      return Center(child: _buildPlaceholder());
     }
 
-    return Column(
-      children: [
-        // Image comparison container
-        Center(
-          child: Container(
-            height: 250,
+    // Calculate responsive width based on screen size
+    final screenWidth = MediaQuery.of(context).size.width;
+    final imageWidth = screenWidth > 600 ? 500.0 : screenWidth * 0.9;
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Image comparison container
+          Container(
             key: _imageKey,
+            width: imageWidth,
+            height: imageWidth * 0.75, // Maintain aspect ratio
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  spreadRadius: 0,
-                ),
-              ],
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -72,6 +70,7 @@ class ImagePreviewState extends State<ImagePreview> {
                   // Base image (compressed)
                   SizedBox(
                     width: imageWidth,
+                    height: double.infinity,
                     child: Image.memory(
                       widget.compressedImage!,
                       fit: BoxFit.contain,
@@ -84,6 +83,7 @@ class ImagePreviewState extends State<ImagePreview> {
                       widthFactor: _sliderValue,
                       child: SizedBox(
                         width: imageWidth,
+                        height: double.infinity,
                         child: Image.memory(
                           widget.originalImage!,
                           fit: BoxFit.contain,
@@ -94,7 +94,7 @@ class ImagePreviewState extends State<ImagePreview> {
                   // Labels
                   _buildImageLabels(),
                   // Slider handle
-                  _buildSliderHandle(),
+                  _buildSliderHandle(imageWidth),
                   // Touch overlay for mobile
                   Positioned.fill(
                     child: GestureDetector(
@@ -103,13 +103,10 @@ class ImagePreviewState extends State<ImagePreview> {
                       onHorizontalDragEnd: (_) =>
                           setState(() => _isDragging = false),
                       onHorizontalDragUpdate: (details) {
-                        if (_imageSize != null) {
-                          setState(() {
-                            _sliderValue +=
-                                details.primaryDelta! / _imageSize!.width;
-                            _sliderValue = _sliderValue.clamp(0.0, 1.0);
-                          });
-                        }
+                        setState(() {
+                          _sliderValue += details.primaryDelta! / imageWidth;
+                          _sliderValue = _sliderValue.clamp(0.0, 1.0);
+                        });
                       },
                     ),
                   ),
@@ -117,43 +114,43 @@ class ImagePreviewState extends State<ImagePreview> {
               ),
             ),
           ),
-        ),
-        SizedBox(height: 16),
-        // Instructions
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: primaryColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.swipe,
-                size: 20,
-                color: primaryColor,
-              ),
-              SizedBox(width: 8),
-              Text(
-                'Drag slider to compare images',
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
+          SizedBox(height: 16),
+          // Instructions
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: primaryColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.swipe,
+                  size: 20,
                   color: primaryColor,
-                  fontWeight: FontWeight.w500,
                 ),
-              ),
-            ],
+                SizedBox(width: 8),
+                Text(
+                  'Drag slider to compare images',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: primaryColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildPlaceholder() {
     return Container(
-      width: imageWidth,
-      height: 150,
+      width: 400,
+      height: 300,
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
@@ -230,9 +227,9 @@ class ImagePreviewState extends State<ImagePreview> {
     );
   }
 
-  Widget _buildSliderHandle() {
+  Widget _buildSliderHandle(double imageWidth) {
     return Positioned(
-      left: (_imageSize?.width ?? imageWidth) * _sliderValue - 16,
+      left: imageWidth * _sliderValue - 16,
       top: 0,
       bottom: 0,
       child: MouseRegion(
